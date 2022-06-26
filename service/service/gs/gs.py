@@ -10,7 +10,7 @@ creds_file = "creds.json"
 
 class GoogleSheet:
     """The GoogleSheet object helps to work with Google Sheets."""
-    def __int__(self):
+    def __init__(self):
         """
         Initialize class, make useful objects to work with Google API
         """
@@ -24,4 +24,4 @@ class GoogleSheet:
         Get all data from sheet
         :return: dict
         """
-        return dict(self.sheet.get_all_records())
+        return self.sheet.get_all_records()
