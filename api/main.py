@@ -1,15 +1,26 @@
-from flask import Flask
+from flask import Flask, jsonify, make_response
 from db.db import Db
+import json
 
 app = Flask(__name__)
+db = Db()
 
-@app.route('/')
+@app.route('/todo/api/v1.0/sum', methods=['GET'])
+def sum_of_orders():
+    return jsonify({ 'sum': db.get_sum_of_price() })
+
+
+@app.route('/todo/api/v1.0/all_data', methods=['GET'])
 def index():
-    return "Hello, World!"
+    response = make_response(jsonify(db.get_data_from_db()))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 
+@app.route('/todo/api/v1.0/ordered_data', methods=['GET'])
+def ordered():
+    response = make_response(jsonify(db.get_ordered_data()))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 
 if __name__ == '__main__':
-    db = Db()
-    print(db.get_data_from_db())
-    print(db.get_sum_of_price())
     app.run(debug=True)

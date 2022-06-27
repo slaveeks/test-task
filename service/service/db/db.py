@@ -12,14 +12,14 @@ class Db:
                               ID     INT    NOT NULL UNIQUE ,
                               ORDER_NUMBER         INT  NOT NULL,
                               USD_PRICE  INT NOT NULL,
-                              DELIVERY_TIME DATE,
+                              DELIVERY_TIME CHAR(10),
                               RUB_PRICE  REAL NOT NULL); '''
         self.cursor.execute(create_table_query)
         self.conn.commit()
 
     def insert_data(self, data):
         insert_query = """ INSERT INTO GOOGLESHEET (ID, ORDER_NUMBER, USD_PRICE, DELIVERY_TIME, RUB_PRICE)
-         VALUES ({}, {}, {}, to_date('{}', 'DD.MM.YYYY'), {})""".format(data['№'], data['заказ №'], data['стоимость,$'], data['срок поставки'], data['стоимость,₽'])
+         VALUES ({}, {}, {}, '{}', {})""".format(data['№'], data['заказ №'], data['стоимость,$'], data['срок поставки'], data['стоимость,₽'])
         self.cursor.execute(insert_query)
         self.conn.commit()
 

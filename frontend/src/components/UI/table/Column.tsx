@@ -5,6 +5,8 @@ import styled from 'styled-components';
  * Interface for container component props
  */
 interface Props{
+  text: string;
+  key: string;
 }
 
 /**
@@ -12,13 +14,8 @@ interface Props{
  *
  * @param props - props of component
  */
-const ContainerStyled = styled.div<Props>`
-  position: absolute;
-  height: 100vh;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
+const ColumnStyled = styled.td<Props>`
+  border: 1px solid black;
 `;
 
 /**
@@ -28,10 +25,12 @@ const ContainerStyled = styled.div<Props>`
  *
  * @return {React.FC<Props>}
  */
-const Container: React.FC<Props> = ({...props}) => {
+const Column: React.FC<Props> = ({...props}) => {
   return (
-    <ContainerStyled {...props}/>
+    <ColumnStyled {...props}>
+      {props.text}
+    </ColumnStyled>
   );
 };
 
-export default Container;
+export default Column;

@@ -14,11 +14,11 @@ interface Props{
  */
 const ContainerStyled = styled.div<Props>`
   position: absolute;
-  height: 100vh;
-  top: 0;
-  bottom: 0;
+  height: 500px;
+  top: 2000px;
+  bottom: 100px;
   left: 0;
-  width: 100vw;
+  width: 800px;
 `;
 
 /**
@@ -28,10 +28,10 @@ const ContainerStyled = styled.div<Props>`
  *
  * @return {React.FC<Props>}
  */
-const Container: React.FC<Props> = ({...props}) => {
+const GraphContainer: React.FC<Props> = ({...props}) => {
   return (
     <ContainerStyled {...props}/>
   );
 };
 
-export default Container;
+export default GraphContainer;
