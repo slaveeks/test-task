@@ -15,8 +15,7 @@ interface Props{
 const ContainerStyled = styled.div<Props>`
   position: absolute;
   height: 500px;
-  top: 2000px;
-  bottom: 100px;
+  top: 10px;
   left: 0;
   width: 800px;
 `;

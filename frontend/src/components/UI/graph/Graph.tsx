@@ -30,7 +30,7 @@ const options = {
   scales: {
     y: {
       ticks: {
-        stepSize: 20000,
+        stepSize: 2000,
       },
     },
     x: {

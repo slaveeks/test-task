@@ -2,37 +2,50 @@ import psycopg2
 
 
 class Db:
-    def __init__(self):
-        self.conn = psycopg2.connect(dbname='postgres3', user='db_user',
+    def get_db_connection(self):
+        conn = psycopg2.connect(dbname='postgres3', user='db_user',
                                 password='mypassword', host='localhost')
-        self.cursor = self.conn.cursor()
+        return conn
 
     def check_version(self):
-        self.cursor.execute("SELECT version();")
+        conn = self.get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT version();")
+        cur.close()
+        conn.close()
 
     def get_data_from_db(self):
-        self.cursor.execute('''SELECT * from GOOGLESHEET''')
-        data = self.cursor.fetchall()
-        print(data)
-        self.conn.commit()
+        conn = self.get_db_connection()
+        cur = conn.cursor()
+        cur.execute('''SELECT * from GOOGLESHEET ORDER BY ID''')
+        data = cur.fetchall()
+        cur.close()
+        conn.close()
         return data
 
     def get_sum_of_price(self):
-        self.cursor.execute(''' SELECT SUM ( USD_PRICE ) FROM GOOGLESHEET''')
-        data = self.cursor.fetchone()
+        conn = self.get_db_connection()
+        cur = conn.cursor()
+        cur.execute(''' SELECT SUM ( USD_PRICE ) FROM GOOGLESHEET''')
+        data = cur.fetchone()
         print(data)
-        self.conn.commit()
+        cur.close()
+        conn.close()
         return data[0]
 
     def get_ordered_data(self):
-        self.cursor.execute('''SELECT DELIVERY_TIME, SUM (RUB_PRICE) from GOOGLESHEET
-                                GROUP BY DELIVERY_TIME ''')
-        executed = self.cursor.fetchall()
+        conn = self.get_db_connection()
+        cur = conn.cursor()
+        cur.execute('''SELECT DELIVERY_TIME, SUM (USD_PRICE) from GOOGLESHEET
+                      GROUP BY DELIVERY_TIME
+                                ''')
+        executed = cur.fetchall()
         arr = { 'labels': [],
                 'values': []}
+        print(executed)
         for line in executed:
             arr['labels'].append(line[0])
             arr['values'].append(line[1])
-        print(arr)
-        self.conn.commit()
+        cur.close()
+        conn.close()
         return arr

@@ -16,7 +16,10 @@ interface Props{
  * @param props - props of component
  */
 const TableStyled = styled.table<Props>`
-  width: 800px;
+  position: absolute;
+  width: 600px;
+  right: 0;
+  top: 100px;
   border: 1px solid black;
   border-collapse: collapse;
 `;

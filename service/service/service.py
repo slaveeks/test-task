@@ -20,9 +20,11 @@ class GoogleSheetService:
     def schedule(self):
         while True:
             records = self.gs.get_all_records()
-            self.db.clear_table()
             for i in records:
-                i['стоимость,₽'] = self.course.get_usd_course() * i['стоимость,$']
-                self.db.insert_data(i)
-            time.sleep(50)
+                i['стоимость,₽'] = "{:.2f}".format(self.course.get_usd_course() * i['стоимость,$'])
+                if self.db.is_exists(i):
+                    self.db.compare_data(i)
+                else:
+                    self.db.insert_data(i)
+            time.sleep(5)
 

@@ -15,6 +15,7 @@ interface Props{
 const ContainerStyled = styled.div<Props>`
   position: absolute;
   height: 100vh;
+  display: flex;
   top: 0;
   bottom: 0;
   left: 0;
