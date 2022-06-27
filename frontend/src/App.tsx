@@ -3,6 +3,7 @@ import Container from './components/layouts/Container';
 import Table from './components/UI/table/Table';
 import Graph from './components/UI/graph/Graph';
 import GraphContainer from './components/layouts/GraphContainer';
+import TotalInfo from './components/UI/totalInfo/TotalInfo';
 
 /**
  * Makes the main page
@@ -16,6 +17,7 @@ function App(): JSX.Element {
       <GraphContainer>
         <Graph/>
       </GraphContainer>
+      <TotalInfo/>
     </Container>
   );
 }

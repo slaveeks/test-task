@@ -7,7 +7,9 @@ db = Db()
 
 @app.route('/todo/api/v1.0/sum', methods=['GET'])
 def sum_of_orders():
-    return jsonify({ 'sum': db.get_sum_of_price() })
+    response = make_response(jsonify({'sum': db.get_sum_of_price()}))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 
 
 @app.route('/todo/api/v1.0/all_data', methods=['GET'])

@@ -47,6 +47,7 @@ const Table: React.FC<Props> = ({...props}) => {
         <Column text={'заказ №'} key={'1'}/>
         <Column text={'стоимость,$'} key={'1'}/>
         <Column text={'срок поставки'} key={'1'}/>
+        <Column text={'стоимость,₽'} key={'1'}/>
       </Row>
       { data ? data!.map((entity) =>
         <Row isArticleRow={false} key={'1'}>

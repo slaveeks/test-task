@@ -13,12 +13,16 @@ class Db:
     def get_data_from_db(self):
         self.cursor.execute('''SELECT * from GOOGLESHEET''')
         data = self.cursor.fetchall()
+        print(data)
         self.conn.commit()
         return data
 
     def get_sum_of_price(self):
         self.cursor.execute(''' SELECT SUM ( USD_PRICE ) FROM GOOGLESHEET''')
-        return self.cursor.fetchone()[0]
+        data = self.cursor.fetchone()
+        print(data)
+        self.conn.commit()
+        return data[0]
 
     def get_ordered_data(self):
         self.cursor.execute('''SELECT DELIVERY_TIME, SUM (RUB_PRICE) from GOOGLESHEET
@@ -29,4 +33,6 @@ class Db:
         for line in executed:
             arr['labels'].append(line[0])
             arr['values'].append(line[1])
+        print(arr)
+        self.conn.commit()
         return arr
