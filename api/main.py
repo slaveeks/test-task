@@ -1,7 +1,7 @@
 from flask import Flask
 from db.db import Db
 from utils.utils import Utils
-from settings import DB_NAME, DB_HOST, DB_USER, DB_PASSWORD
+from settings import DB_NAME, DB_HOST, DB_USER, DB_PASSWORD, SERVER_HOST
 
 app = Flask(__name__)
 
@@ -37,4 +37,4 @@ def ordered_data():
 
 if __name__ == '__main__':
     # Run flask app
-    app.run(debug=True)
+    app.run(host=SERVER_HOST, debug=True)

@@ -13,3 +13,4 @@ DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
 DB_HOST = os.environ.get('DB_HOST')
 
+SERVER_HOST = os.environ.get('SERVER_HOST')
