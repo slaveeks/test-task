@@ -1,28 +1,40 @@
-from flask import Flask, jsonify, make_response
+from flask import Flask
 from db.db import Db
-import json
+from utils.utils import Utils
+from settings import DB_NAME, DB_HOST, DB_USER, DB_PASSWORD
 
 app = Flask(__name__)
-db = Db()
 
-@app.route('/todo/api/v1.0/sum', methods=['GET'])
+# Initiate database module
+db = Db(DB_NAME, DB_USER, DB_PASSWORD, DB_HOST)
+
+
+# Route to get total sum
+@app.route('/test-task/api/v1.0/sum', methods=['GET'])
 def sum_of_orders():
-    response = make_response(jsonify({'sum': db.get_sum_of_price()}))
-    response.headers['Access-Control-Allow-Origin'] = '*'
+    # Make response to client
+    response = Utils.make_response_to_client({'sum': db.get_sum_of_price()})
+
     return response
 
 
-@app.route('/todo/api/v1.0/all_data', methods=['GET'])
-def index():
-    response = make_response(jsonify(db.get_data_from_db()))
-    response.headers['Access-Control-Allow-Origin'] = '*'
+# Route to get all data
+@app.route('/test-task/api/v1.0/all_data', methods=['GET'])
+def all_data():
+    # Make response to client
+    response = Utils.make_response_to_client(db.get_data_from_db())
+
     return response
 
-@app.route('/todo/api/v1.0/ordered_data', methods=['GET'])
-def ordered():
-    response = make_response(jsonify(db.get_ordered_data()))
-    response.headers['Access-Control-Allow-Origin'] = '*'
+
+# Route to get grouped by some data with dates
+@app.route('/test-task/api/v1.0/ordered_data', methods=['GET'])
+def ordered_data():
+    response = Utils.make_response_to_client(db.get_ordered_data())
+
     return response
+
 
 if __name__ == '__main__':
+    # Run flask app
     app.run(debug=True)
