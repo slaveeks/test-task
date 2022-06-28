@@ -1,6 +1,6 @@
 # Test task for Numbers
 
-This application parses Google Sheet.
+This application parses Google Sheet. Creds for Google Sheet API are already exists in repository
 
 # Installation
 
