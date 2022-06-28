@@ -61,7 +61,7 @@ const Table: React.FC<Props> = ({...props}) => {
  */
 const TableStyled = styled.table<Props>`
   position: absolute;
-  width: 600px;
+  width: 100%;
   right: 0;
   top: 100px;
   border: 1px solid black;

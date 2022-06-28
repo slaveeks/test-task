@@ -13,10 +13,8 @@ interface Props{
  * @param props - props of component
  */
 const GraphContainerStyled = styled.div<Props>`
-  position: absolute;
+  position: static;
   height: 500px;
-  top: 10px;
-  left: 0;
   width: 800px;
 `;
 

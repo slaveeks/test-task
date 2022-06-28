@@ -33,7 +33,7 @@ const Row: React.FC<Props> = (props) => {
 const RowStyled = styled.tr<Props>`
   border: 1px solid black;
   width: 100px;
-  background-color: aqua;
+  background-color: aliceblue;
   text-align: right;
   ${(props) => props.isArticleRow && css`
     height: 50px;

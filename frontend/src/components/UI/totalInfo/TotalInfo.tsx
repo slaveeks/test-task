@@ -72,8 +72,7 @@ const ArticleStyled = styled.div<Props>`
 const TotalInfoContainerStyled = styled.div<Props>`
   width: 200px;
   height: 50px;
-  right: 20px;
-  position: absolute;
+  margin: auto;
 `;
 
 export default TotalInfo;

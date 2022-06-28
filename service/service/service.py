@@ -44,8 +44,8 @@ class GoogleSheetService:
 
             # Cycle for every line in document
             for record in records:
-                # Check is line data exists, if line is empty, skip this line
-                if not record['№']:
+                # Check line fullness, if line is not full, skip this line
+                if not record['№'] or not record['заказ №'] or not record['стоимость,$'] or not record['срок поставки']:
                     continue
 
                 # Create price in rubles, and pass it to object
@@ -65,6 +65,8 @@ class GoogleSheetService:
                     if datetime.strptime(record['срок поставки'], '%d.%m.%Y').date() < date.today():
 
                         # Send notification about delivery delay
-                        self.tg.telegram_bot_send_message('{} < {}'.format(record['срок поставки'], date.today()))
+                        self.tg.telegram_bot_send_message('Задержка по заказу № {} на {}'
+                                                          .format(record['заказ №'],
+                                                                  record['срок поставки']))
             # Scheduling delay
             time.sleep(SCHEDULING_DELAY)
