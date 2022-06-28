@@ -22,6 +22,7 @@ const Table: React.FC<Props> = ({...props}) => {
 
   useEffect(() => {
     const exec = async (): Promise<void> => {
+      // Data returns as array of lines, which consists array of columns' data
       const response = await Transport.getAllData();
       setData(response);
     };

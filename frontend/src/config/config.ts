@@ -12,6 +12,5 @@ export class Config {
   /**
    * SERVER OPTIONS
    */
-  public static SERVER_HOST: string = process.env.SERVER_HOST || 'http://localhost';
-  public static SERVER_PORT: string = process.env.SERVER_PORT || '5000';
+  public static SERVER_URL: string = process.env.SERVER_URL || 'http://localhost:5000';
 }
