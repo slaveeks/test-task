@@ -1,11 +1,14 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
-scope = ["https://spreadsheets.google.com/feeds",
+# URLs for Google API
+scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/spreadsheets',
-         "https://www.googleapis.com/auth/drive.file",
-         "https://www.googleapis.com/auth/drive"]
-creds_file = "creds.json"
+         'https://www.googleapis.com/auth/drive.file',
+         'https://www.googleapis.com/auth/drive']
+
+# Path for file with creds for Google API
+creds_file = 'creds.json'
 
 
 class GoogleSheet:
@@ -14,10 +17,16 @@ class GoogleSheet:
         """
         Initialize class, make useful objects to work with Google API
         """
+
+        # Parse creds
         creds = ServiceAccountCredentials.from_json_keyfile_name(creds_file,
                                                                  scope)
+
+        # Auth client
         client = gspread.authorize(creds)
-        self.sheet = client.open("Тестовое задание").sheet1
+
+        # Get sheet by document name
+        self.sheet = client.open('Тестовое задание').sheet1
 
     def get_all_records(self):
         """

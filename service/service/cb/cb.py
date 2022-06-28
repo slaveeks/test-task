@@ -1,16 +1,46 @@
-import xml.etree.cElementTree as ET
+import xml.etree.cElementTree as Et
 import requests
 
 
 class Course:
-    @staticmethod
-    def get_usd_course():
-        res = requests.get('http://www.cbr.ru/scripts/XML_daily.asp')
+    """
+    The Course to convert course
+    """
 
-        tree = ET.fromstring(res.content)
+    def __init__(self):
 
-        a = tree.findall('Valute')
+        # Currency id of cb RF
+        self.valute_id = 'R01235'
 
-        for i in a:
-            if i.get('ID') == 'R01235':
-                return float(i.find('Value').text.replace(',', '.'))
+        # Url for request to get course
+        self.request_url = 'http://www.cbr.ru/scripts/XML_daily.asp'
+
+    def get_usd_course(self):
+        """
+        Get USD course
+        :return: float
+        """
+
+        # Send request to get data
+        res = requests.get(self.request_url)
+
+        # Parse xml
+        tree = Et.fromstring(res.content)
+
+        # Get currencies
+        currencies = tree.findall('Valute')
+
+        for currency in currencies:
+
+            # Find currency by id
+            if currency.get('ID') == self.valute_id:
+                # Get value, convert to float
+                return float(currency.find('Value').text.replace(',', '.'))
+
+    def convert_from_usd_to_rub(self, usd):
+        """
+        Convert from USD to RUB
+        :param usd: data to convert
+        :return: float
+        """
+        return "{:.2f}".format(self.get_usd_course() * usd)
