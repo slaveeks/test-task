@@ -103,4 +103,5 @@ class Db:
             res['values'].append(line[1])
 
         self.close_cursor_and_connection(cur, conn)
+
         return res
