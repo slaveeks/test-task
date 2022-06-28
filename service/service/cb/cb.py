@@ -5,15 +5,16 @@ import requests
 class Course:
     """
     The Course to convert course
+    :param valute_id: id of currency to get course
+    :param request_url: url for request to get data
     """
-
-    def __init__(self):
+    def __init__(self, valute_id, request_url):
 
         # Currency id of cb RF
-        self.valute_id = 'R01235'
+        self.valute_id = valute_id
 
         # Url for request to get course
-        self.request_url = 'http://www.cbr.ru/scripts/XML_daily.asp'
+        self.request_url = request_url
 
     def get_usd_course(self):
         """

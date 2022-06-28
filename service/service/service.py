@@ -5,6 +5,10 @@ from service.gs.gs import GoogleSheet
 from service.db.db import Db
 from service.cb.cb import Course
 from service.telegram.telegram import Telegram
+from settings import DB_NAME, DB_USER,\
+    DB_HOST, DB_PASSWORD, CREDS_PATH,\
+    DOCUMENT_NAME, CURRENCY_ID, CB_API_URL, \
+    TELEGRAM_BOT_TOKEN, TELEGRAM_API_URL, SCHEDULING_DELAY
 
 
 class GoogleSheetService:
@@ -15,16 +19,16 @@ class GoogleSheetService:
 
     def __init__(self):
         # Initiate Db class to save and get data
-        self.db = Db()
+        self.db = Db(DB_NAME, DB_USER, DB_PASSWORD, DB_HOST)
 
         # Initiate GoogleSheet class to get data
-        self.gs = GoogleSheet()
+        self.gs = GoogleSheet(CREDS_PATH, DOCUMENT_NAME)
 
         # Initiate Course class to get current exchange rate
-        self.course = Course()
+        self.course = Course(CURRENCY_ID, CB_API_URL)
 
         # Initiate Telegram class to send notifications
-        self.tg = Telegram()
+        self.tg = Telegram(TELEGRAM_BOT_TOKEN, TELEGRAM_API_URL)
 
     def schedule(self):
         """
@@ -63,5 +67,4 @@ class GoogleSheetService:
                         # Send notification about delivery delay
                         self.tg.telegram_bot_send_message('{} < {}'.format(record['срок поставки'], date.today()))
             # Scheduling delay
-            time.sleep(5)
-
+            time.sleep(SCHEDULING_DELAY)

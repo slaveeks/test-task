@@ -4,21 +4,25 @@ import psycopg2
 class Db:
     """
     The Db for working with database
+    :param db_name: database name
+    :param db_user: database user
+    :param db_password: database passwort
+    :param db_host: database host
     """
-    def __init__(self):
+    def __init__(self, db_name, db_user, db_password, db_host):
         """
         Create database connection and create new table
         """
 
         # Connect to db
-        self.conn = psycopg2.connect(dbname='postgres3', user='db_user',
-                                     password='mypassword', host='localhost', port="5432")
+        self.conn = psycopg2.connect(dbname=db_name, user=db_user,
+                                     password=db_password, host=db_host)
 
         # Get cursor
         self.cursor = self.conn.cursor()
 
         # Create query for creating table
-        create_table_query = '''CREATE TABLE GOOGLESHEET (
+        create_table_query = '''CREATE TABLE IF NOT EXISTS GOOGLESHEET (
                                      ID     INT   PRIMARY KEY,
                                      ORDER_NUMBER         INT  NOT NULL,
                                      USD_PRICE  INT NOT NULL,

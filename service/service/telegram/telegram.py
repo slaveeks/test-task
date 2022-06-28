@@ -5,13 +5,13 @@ class Telegram:
     """
     The Telegram for working with telegram notifications
     """
-    def __init__(self):
+    def __init__(self, token, api_url):
 
         # Telegram api url to send request
-        self.telegram_url = 'https://api.telegram.org/bot'
+        self.telegram_url = api_url
 
         # Bot token
-        self.token = '5531831428:AAHqoVnCt_6jDSYRgx4HKTl7p1MRrXEeEfE'
+        self.token = token
 
         # Make request updates
         response = requests.get('{}{}/getUpdates'.format(self.telegram_url, self.token))

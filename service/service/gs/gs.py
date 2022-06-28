@@ -7,26 +7,27 @@ scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive.file',
          'https://www.googleapis.com/auth/drive']
 
-# Path for file with creds for Google API
-creds_file = 'creds.json'
-
 
 class GoogleSheet:
-    """The GoogleSheet object helps to work with Google Sheets."""
-    def __init__(self):
+    """
+    The GoogleSheet object helps to work with Google Sheets.
+    :param creds_path: path of creds file for Google API
+    :param document_name: name of document to parse
+    """
+    def __init__(self, creds_path, document_name):
         """
         Initialize class, make useful objects to work with Google API
         """
 
         # Parse creds
-        creds = ServiceAccountCredentials.from_json_keyfile_name(creds_file,
+        creds = ServiceAccountCredentials.from_json_keyfile_name(creds_path,
                                                                  scope)
 
         # Auth client
         client = gspread.authorize(creds)
 
         # Get sheet by document name
-        self.sheet = client.open('Тестовое задание').sheet1
+        self.sheet = client.open(document_name).sheet1
 
     def get_all_records(self):
         """
