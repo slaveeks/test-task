@@ -44,3 +44,14 @@ class Db:
         self.cursor.execute(''' UPDATE GOOGLESHEET SET  ORDER_NUMBER={}, USD_PRICE={}, DELIVERY_TIME='{}', RUB_PRICE={} WHERE ID={}'''.format(data['заказ №'], data['стоимость,$'], data['срок поставки'], data['стоимость,₽'], data['№']))
         self.conn.commit()
 
+    def get_ids(self):
+        self.cursor.execute(''' SELECT ID FROM GOOGLESHEET ''')
+        data = self.cursor.fetchall()
+        return data
+
+    def check_remove(self, data):
+        ids = self.get_ids()
+        for id in ids:
+            res = next((item for item in data if item["№"] == id[0]), None)
+            if not res:
+                self.cursor.execute(''' DELETE FROM GOOGLESHEET WHERE ID={}'''.format(id[0]))
