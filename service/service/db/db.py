@@ -42,12 +42,18 @@ class Db:
         """
 
         # Create query for inserting new data to table
-        insert_query = """ INSERT INTO GOOGLESHEET (ID, ORDER_NUMBER, USD_PRICE, DELIVERY_TIME, RUB_PRICE)
-                                VALUES ({}, {}, {}, '{}', {})""".format(data['№'],
-                                                                        data['заказ №'],
-                                                                        data['стоимость,$'],
-                                                                        data['срок поставки'],
-                                                                        data['стоимость,₽'])
+        insert_query = ''' INSERT INTO GOOGLESHEET
+                            (ID,
+                             ORDER_NUMBER,
+                             USD_PRICE,
+                             DELIVERY_TIME,
+                             RUB_PRICE)
+                                VALUES ({}, {}, {}, '{}', {})'''\
+                                    .format(data['№'],
+                                            data['заказ №'],
+                                            data['стоимость,$'],
+                                            data['срок поставки'],
+                                            data['стоимость,₽'])
         # Execute query
         self.cursor.execute(insert_query)
 
@@ -62,7 +68,8 @@ class Db:
         """
 
         # Create query for select data by id
-        select_query = ''' SELECT 1 FROM GOOGLESHEET WHERE ID={}'''.format(data['№'])
+        select_query = ''' SELECT 1 FROM GOOGLESHEET WHERE ID={}'''.\
+            format(data['№'])
 
         # Execute query
         self.cursor.execute(select_query)
@@ -75,13 +82,15 @@ class Db:
 
     def compare_data_and_update(self, data):
         """
-        Compare incoming and saved data, if there are some changes, table updates
+        Compare incoming and saved data,
+        if there are some changes, table updates
         :param data: incoming data to compare
         :return:
         """
 
         # Create select data query
-        select_query = ''' SELECT * FROM GOOGLESHEET WHERE ID={}'''.format(data['№'])
+        select_query = ''' SELECT * FROM GOOGLESHEET WHERE ID={}'''\
+            .format(data['№'])
 
         # Execute query
         self.cursor.execute(select_query)
@@ -106,12 +115,13 @@ class Db:
 
         # Create update query
         update_query = ''' UPDATE GOOGLESHEET
-         SET  ORDER_NUMBER={}, USD_PRICE={}, 
-         DELIVERY_TIME='{}', RUB_PRICE={} WHERE ID={}'''.format(data['заказ №'],
-                                                                data['стоимость,$'],
-                                                                data['срок поставки'],
-                                                                data['стоимость,₽'],
-                                                                data['№'])
+         SET  ORDER_NUMBER={}, USD_PRICE={},
+         DELIVERY_TIME='{}', RUB_PRICE={} WHERE ID={}'''\
+                             .format(data['заказ №'],
+                                     data['стоимость,$'],
+                                     data['срок поставки'],
+                                     data['стоимость,₽'],
+                                     data['№'])
 
         # Execute query
         self.cursor.execute(update_query)
@@ -147,14 +157,18 @@ class Db:
         id_arr = self.get_all_id_from_db()
 
         for element in id_arr:
-            # Every element has this structure: ({int},), check is db id exists in incoming data
-            res = next((item for item in data if item["№"] == element[0]), None)
+            # Every element has this structure: ({int},),
+            # check is db id exists in incoming data
+            res = next((item for item in data if item['№'] == element[0]),
+                       None)
 
             # Check res contains any data
             if not res:
 
                 # Create query to delete removed from Google Docs data from db
-                delete_query = ''' DELETE FROM GOOGLESHEET WHERE ID={}'''.format(element[0])
+                delete_query = ''' DELETE FROM GOOGLESHEET
+                                    WHERE ID={}'''.\
+                    format(element[0])
 
                 # Execute query
                 self.cursor.execute(delete_query)

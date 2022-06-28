@@ -39,22 +39,28 @@ class GoogleSheetService:
         while True:
             # Get records from Google sheet
             records = self.gs.get_all_records()
-            # Check is saved to db data removed from table and remove it from db in this case
+            # Check is saved to db data removed from table
+            # and remove it from db in this case
             self.db.check_deleted_data(records)
 
             # Cycle for every line in document
             for record in records:
                 # Check line fullness, if line is not full, skip this line
-                if not record['№'] or not record['заказ №'] or not record['стоимость,$'] or not record['срок поставки']:
+                if not record['№'] or \
+                   not record['заказ №'] or \
+                   not record['стоимость,$'] or \
+                   not record['срок поставки']:
                     continue
 
                 # Create price in rubles, and pass it to object
-                record['стоимость,₽'] = self.course.convert_from_usd_to_rub(record['стоимость,$'])
+                record['стоимость,₽'] = self.course.convert_from_usd_to_rub(
+                    record['стоимость,$'])
 
                 # Check is record exists in db
                 if self.db.is_exists(record):
 
-                    # Compare record with saved data and update it, if there are any changes
+                    # Compare record with saved data and update it,
+                    # if there are any changes
                     self.db.compare_data_and_update(record)
                 else:
 
@@ -62,11 +68,12 @@ class GoogleSheetService:
                     self.db.insert_data(record)
 
                     # Compare delivery time and today's date
-                    if datetime.strptime(record['срок поставки'], '%d.%m.%Y').date() < date.today():
+                    if datetime.strptime(record['срок поставки'],
+                                         '%d.%m.%Y').date() < date.today():
 
                         # Send notification about delivery delay
-                        self.tg.telegram_bot_send_message('Задержка по заказу № {} на {}'
-                                                          .format(record['заказ №'],
-                                                                  record['срок поставки']))
+                        self.tg.telegram_send('Задержка по заказу № {} на {}'.
+                                              format(record['заказ №'],
+                                                     record['срок поставки']))
             # Scheduling delay
             time.sleep(SCHEDULING_DELAY)
