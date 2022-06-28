@@ -8,6 +8,20 @@ interface Props{
 }
 
 /**
+ * Container component
+ *
+ * @param {Props} props - props of component
+ *
+ * @return {React.FC<Props>}
+ */
+const Container: React.FC<Props> = ({...props}) => {
+  return (
+    <ContainerStyled {...props}/>
+  );
+};
+
+
+/**
  * Styled container component
  *
  * @param props - props of component
@@ -21,18 +35,5 @@ const ContainerStyled = styled.div<Props>`
   left: 0;
   width: 100vw;
 `;
-
-/**
- * Container component
- *
- * @param {Props} props - props of component
- *
- * @return {React.FC<Props>}
- */
-const Container: React.FC<Props> = ({...props}) => {
-  return (
-    <ContainerStyled {...props}/>
-  );
-};
 
 export default Container;

@@ -23,21 +23,29 @@ ChartJS.register(
     Legend,
 );
 
-const labels = ['1', '2', '3', '4', '5'];
+// Base labels for Graph
+const baseLabels = ['22.05.22', '25.05.22'];
+
+// Base data for graph
+const baseData = [0, 0, 0, 0];
 
 const options = {
+  // Make responsive for parent
   responsive: true,
   scales: {
     y: {
       ticks: {
+        // Make y coords labels' steps 2000
         stepSize: 2000,
       },
     },
     x: {
       grid: {
+        // Not display x lines
         display: false,
       },
       ticks: {
+        // X labels rotation
         maxRotation: 45,
         minRotation: 45,
       },
@@ -45,18 +53,18 @@ const options = {
   },
   plugins: {
     legend: {
+      // Do not display legend
       display: false,
     },
   },
 };
 
-const a = [55, 100, 5000, 58000, 10000];
-
+// Initiate base data for graph
 let data = {
-  labels,
+  labels: baseLabels,
   datasets: [
     {
-      data: a.map((a) => a),
+      data: baseData.map((data) => data),
       pointRadius: 0,
       borderColor: '#084de0',
     },
@@ -64,18 +72,20 @@ let data = {
 };
 
 const Graph: React.FC = () => {
+  // Make state to change graph
   const [googleLabels, setLabels] = useState<SortedData | undefined>(undefined);
 
   useEffect(() => {
     const exec = async (): Promise<void> => {
+      // Make response to get data for graph
       const response = await Transport.getOrderedData();
-      console.log(response);
       setLabels(response);
     };
 
     exec();
   }, []);
   if (googleLabels) {
+    // Change graph data
     data = {
       labels: googleLabels.labels,
       datasets: [

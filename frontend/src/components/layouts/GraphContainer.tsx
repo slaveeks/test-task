@@ -2,17 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 
 /**
- * Interface for container component props
+ * Interface for graph container component props
  */
 interface Props{
 }
 
 /**
- * Styled container component
+ * Styled graph container component
  *
  * @param props - props of component
  */
-const ContainerStyled = styled.div<Props>`
+const GraphContainerStyled = styled.div<Props>`
   position: absolute;
   height: 500px;
   top: 10px;
@@ -21,7 +21,7 @@ const ContainerStyled = styled.div<Props>`
 `;
 
 /**
- * Container component
+ * Graph container component
  *
  * @param {Props} props - props of component
  *
@@ -29,7 +29,7 @@ const ContainerStyled = styled.div<Props>`
  */
 const GraphContainer: React.FC<Props> = ({...props}) => {
   return (
-    <ContainerStyled {...props}/>
+    <GraphContainerStyled {...props}/>
   );
 };
 

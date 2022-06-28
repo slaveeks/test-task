@@ -2,15 +2,17 @@ import React, {PropsWithChildren} from 'react';
 import styled, {css} from 'styled-components';
 
 /**
- * Interface for container component props
+ * Interface for row component props
  */
 interface Props extends PropsWithChildren{
+  // Is row is article for table
   isArticleRow: boolean;
-  key: string;
+  // Key for map
+  key?: number;
 }
 
 /**
- * Container component
+ * Row component
  *
  * @param {Props} props - props of component
  *
@@ -23,7 +25,7 @@ const Row: React.FC<Props> = (props) => {
 };
 
 /**
- * Styled container component
+ * Styled row component
  *
  * @param {Props} props - props of component
  * @return {css}

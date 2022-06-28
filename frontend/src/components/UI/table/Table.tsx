@@ -5,27 +5,13 @@ import Column from './Column';
 import {Transport} from '../../../transport/transport';
 
 /**
- * Interface for container component props
+ * Interface for table component props
  */
 interface Props{
 }
 
 /**
- * Styled container component
- *
- * @param props - props of component
- */
-const TableStyled = styled.table<Props>`
-  position: absolute;
-  width: 600px;
-  right: 0;
-  top: 100px;
-  border: 1px solid black;
-  border-collapse: collapse;
-`;
-
-/**
- * Container component
+ * Table component
  *
  * @param {Props} props - props of component
  *
@@ -37,7 +23,6 @@ const Table: React.FC<Props> = ({...props}) => {
   useEffect(() => {
     const exec = async (): Promise<void> => {
       const response = await Transport.getAllData();
-      console.log(response);
       setData(response);
     };
 
@@ -45,22 +30,41 @@ const Table: React.FC<Props> = ({...props}) => {
   }, []);
   return (
     <TableStyled {...props}>
-      <Row isArticleRow={true} key={'1'}>
-        <Column text={'№'} key={'1'}/>
-        <Column text={'заказ №'} key={'1'}/>
-        <Column text={'стоимость,$'} key={'1'}/>
-        <Column text={'срок поставки'} key={'1'}/>
-        <Column text={'стоимость,₽'} key={'1'}/>
-      </Row>
-      { data ? data!.map((entity) =>
-        <Row isArticleRow={false} key={'1'}>
-          {entity.map((a) =>
-            <Column text={a.toString()} key={'1'}/>,
-          )}
-        </Row>,
-      ): null}
+      <thead>
+        <Row isArticleRow={true}>
+          <Column text={'№'}/>
+          <Column text={'заказ №'}/>
+          <Column text={'стоимость,$'}/>
+          <Column text={'срок поставки'}/>
+          <Column text={'стоимость,₽'}/>
+        </Row>
+      </thead>
+      <tbody>
+        { data ? data!.map((entity, index) =>
+          <Row isArticleRow={false} key={index}>
+            {entity.map((a, index) =>
+              <Column text={a.toString()} key={index}/>,
+            )}
+          </Row>,
+        ): null}
+      </tbody>
     </TableStyled>
   );
 };
+
+
+/**
+ * Styled table component
+ *
+ * @param props - props of component
+ */
+const TableStyled = styled.table<Props>`
+  position: absolute;
+  width: 600px;
+  right: 0;
+  top: 100px;
+  border: 1px solid black;
+  border-collapse: collapse;
+`;
 
 export default Table;
